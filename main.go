@@ -17,8 +17,17 @@ func main() {
 		{index: 1, value: "B"},
 		{index: 3, value: "D"},
 	}
-	dl := &datastructures.DoublyLinkedList[string]{}
-	err := dl.AddElements(testCases)
-	forwardPrint := dl.PrintForward()
-	reversePrint := dl.PrintReverse()
+	dll := &datastructures.DoublyLinkedList[string]{}
+	// Adding values to the list
+	dll.AddElements(testCases)
+	_ = dll.Add(0, "A") // Insert A at index 0
+	_ = dll.Add(1, "B") // Insert B at index 1
+	_ = dll.Add(1, "C") // Insert C at index 1
+	_ = dll.Add(3, "D") // Insert D at index 3
+	_ = dll.Add(0, "E") // Insert E at index 0
+
+	dll.PrintForward()
+	dll.PrintReverse()
+	// Print the list to verify
+	dll.PrintList()
 }
