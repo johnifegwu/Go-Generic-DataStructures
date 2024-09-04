@@ -13,8 +13,6 @@ import (
 const showExpectedResult = false
 const showHints = false
 
-var maxSize = 99
-
 type Node[T any] struct {
 	value      T
 	next, prev *Node[T]
@@ -31,7 +29,7 @@ type DoublyLinkedList[T any] struct {
 func (dll *DoublyLinkedList[T]) Add(index int, v T) error {
 
 	//Check if max size is reached
-	if index < 0 || index > maxSize {
+	if index < 0 || index > dll.size {
 		return errors.New("index exceeds list size")
 	}
 
@@ -39,7 +37,6 @@ func (dll *DoublyLinkedList[T]) Add(index int, v T) error {
 	newNode := &Node[T]{value: v}
 
 	if index == 0 {
-
 		// Insert at the beginning
 		if dll.head == nil {
 			// Empty list
@@ -50,13 +47,11 @@ func (dll *DoublyLinkedList[T]) Add(index int, v T) error {
 			dll.head.prev = newNode
 			dll.head = newNode
 		}
-
 	} else if index == dll.size {
 		// Insert at the end
 		newNode.prev = dll.tail
 		dll.tail.next = newNode
 		dll.tail = newNode
-
 	} else {
 		// Insert in the middle
 		current := dll.head
@@ -69,7 +64,6 @@ func (dll *DoublyLinkedList[T]) Add(index int, v T) error {
 		current.prev = newNode
 	}
 
-	// increment size
 	dll.size++
 	return nil
 }
@@ -87,11 +81,21 @@ func (l *DoublyLinkedList[T]) AddElements(elements []struct {
 	return nil
 }
 
-func (l *DoublyLinkedList[T]) PrintForward() string {
-	if l.size == 0 {
+// Function to print the list for testing purposes
+func (dll *DoublyLinkedList[T]) PrintList() {
+	current := dll.head
+	for current != nil {
+		fmt.Printf("%v ", current.value)
+		current = current.next
+	}
+	fmt.Println()
+}
+
+func (dll *DoublyLinkedList[T]) PrintForward() string {
+	if dll.size == 0 {
 		return ""
 	}
-	current := l.head
+	current := dll.head
 	output := "HEAD"
 	for current != nil {
 		output = fmt.Sprintf("%s -> %v", output, current.value)
@@ -101,11 +105,11 @@ func (l *DoublyLinkedList[T]) PrintForward() string {
 	return fmt.Sprintf("%s -> NULL", output)
 }
 
-func (l *DoublyLinkedList[T]) PrintReverse() string {
-	if l.size == 0 {
+func (dll *DoublyLinkedList[T]) PrintReverse() string {
+	if dll.size == 0 {
 		return ""
 	}
-	current := l.tail
+	current := dll.tail
 	output := "NULL"
 	for current != nil {
 		output = fmt.Sprintf("%s <- %v", output, current.value)
