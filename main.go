@@ -2,10 +2,22 @@ package main
 
 import (
 	datastructures "github.com/johnifegwu/Go-Generic-DataStructures/doublyLinkedList"
+	dp "github.com/johnifegwu/Go-Generic-DataStructures/dp"
 	rollingmean "github.com/johnifegwu/Go-Generic-DataStructures/rollingmean"
 )
 
 func main() {
+
+	// This is how your code will be called.
+	// Your answer should be the number of paths with the given cost.
+	// You can edit this code to try different testing cases.
+	cost := 8
+	maze := dp.NewMaze([][]int{
+		{1, 2, 1},
+		{6, 1, 1},
+		{4, 3, 3},
+	})
+	dp.CountPaths(maze, 0, 0, cost)
 
 	// This is how your code will be called.
 	// Your answer should be the sets of rolling means.
