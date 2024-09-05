@@ -37,7 +37,11 @@ func (c *Cache) Set(k Key, v Value) {
 }
 
 func (c *Cache) Get(k Key) (Value, error) {
+	c.lock.RLock()
+	defer c.lock.RUnlock()
+
 	value, exists := c.cache[k]
+
 	if exists {
 		return value, nil
 	} else {
