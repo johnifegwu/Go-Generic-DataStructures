@@ -1,6 +1,9 @@
 package cache
 
-import "errors"
+import (
+	"errors"
+	"sync"
+)
 
 //const showExpectedResult = false;
 //const showHints = false;
@@ -18,6 +21,7 @@ type ValueReader interface {
 // Make any required changes to the Cache struct.
 type Cache struct {
 	cache map[Key]Value
+	lock  sync.RWMutex
 }
 
 func NewCache() *Cache {
@@ -27,6 +31,8 @@ func NewCache() *Cache {
 }
 
 func (c *Cache) Set(k Key, v Value) {
+	c.lock.Lock()
+	defer c.lock.Unlock()
 	c.cache[k] = v
 }
 
